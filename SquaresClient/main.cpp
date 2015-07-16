@@ -23,7 +23,10 @@
 
 int main(int, char const**)
 {
-    sf::IpAddress address = "rockerhack";
+    // NOTE IMPT! Replace "localhost" with the ip address
+    // or host name of the server you are connecting to
+    // unless you are running client and server on the same machine.
+    sf::IpAddress address = "localhost";
     Game game(address);
     game.start();
     // i'm wrtingi the client so that the server ip can be entered
