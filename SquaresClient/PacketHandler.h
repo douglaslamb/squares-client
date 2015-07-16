@@ -19,16 +19,14 @@ class PacketHandler {
 private:
     sf::IpAddress m_serverAddress;
     sf::UdpSocket m_socket;
-    sf::RenderWindow *m_window;
     std::queue<sf::RectangleShape> m_shapes;
-    sf::Int8 m_clientID;
+    sf::Int32 m_clientID;
     
 public:
     PacketHandler(sf::IpAddress serverAddress);
     void sendConnectionRequest();
     void sendMove(sf::Int32 x, sf::Int32 y);
-    void update();
-    void run();
+    // probably delete run() void run();
     void receivePacket();
     std::queue<sf::RectangleShape>& getShapes();
 };

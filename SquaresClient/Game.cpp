@@ -9,17 +9,19 @@
 #include "Game.h"
 
 Game::Game(sf::IpAddress serverAddress): m_handler(serverAddress), m_window(sf::VideoMode(800, 800), "Squares") {
+    m_window.setFramerateLimit(60);
 }
 
 void Game::start() {
     m_handler.sendConnectionRequest();
-    m_handler.run();
-    // m_window = sf::RenderWindow(sf::VideoMode(800, 800), "Squares");
+    m_handler.receivePacket();
     run();
 }
 
 void Game::run() {
-    while (true) {
+    while (m_window.isOpen()) {
+        // if (clock.getElapsed()
+        m_handler.receivePacket();
         handleInput();
         update();
     }
@@ -27,10 +29,10 @@ void Game::run() {
 
 void Game::update() {
     m_window.clear();
-    std::queue<sf::RectangleShape> shapes = m_handler.getShapes();
-    while (!shapes.empty()) {
-        m_window.draw(shapes.front());
-        shapes.pop();
+    // std::queue<sf::RectangleShape>* shapes = m_handler.getShapes();
+    while (!m_handler.getShapes().empty()) {
+        m_window.draw(m_handler.getShapes().front());
+        m_handler.getShapes().pop();
     }
     m_window.display();
 }
@@ -38,12 +40,15 @@ void Game::update() {
 void Game::handleInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         m_handler.sendMove(-1, 0);
+        std::cout << "left\n";
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         m_handler.sendMove(1, 0);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        std::cout << "right\n";
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         m_handler.sendMove(0, -1);
+        std::cout << "up\n";
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         m_handler.sendMove(0, 1);
+        std::cout << "down\n";
     }
 }

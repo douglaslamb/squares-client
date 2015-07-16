@@ -18,6 +18,7 @@ class Game {
     
 private:
     sf::RenderWindow m_window;
+    sf::Clock m_clock;
     PacketHandler m_handler;
     
 public:

@@ -23,9 +23,10 @@
 
 int main(int, char const**)
 {
-    Game game(sf::IpAddress::LocalHost);
+    sf::IpAddress address = "rockerhack";
+    Game game(address);
     game.start();
-
+    // i'm wrtingi the client so that the server ip can be entered
 
     return EXIT_SUCCESS;
 }
